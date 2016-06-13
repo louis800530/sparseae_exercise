@@ -16,7 +16,13 @@ numgrad = zeros(size(theta));
 % I.e., numgrad(i) should be the (approximately) the partial derivative of J with 
 % respect to theta(i).
 %                
-% Hint: You will probably want to compute the elements of numgrad one at a time. 
+% Hint: You will probably want to
+eps=0.001;
+
+I=eye(size(numgrad,1));
+for i=1:size(numgrad)
+    numgrad(i)=(J(theta+eps*I(:,i))-J(theta-eps*I(:,i)))/(2*eps);
+end
 
 
 

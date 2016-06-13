@@ -53,25 +53,17 @@ for i=1:10000
     a2err=(W2'*err).*A.*(1-A);
     W1grad=W1grad+a2err*data(:,i)';
     b1grad=b1grad+a2err;
-    
-    
+    cost=cost+sum((output-data(:,i)).^2);
 end
-W2=W2-W2grad/10000;
-b2=b2-b2grad/10000;
-W1=W1-W1grad/10000;
-b1=b1-b1grad/10000;
-
-
-
-
-
-
-
-
-
-
-
-
+cost=cost/(2*10000);
+W2grad=W2grad/10000;
+b2grad=b2grad/10000;
+W1grad=W1grad/10000;
+b1grad=b1grad/10000;
+%W2=W2-W2grad;
+%b2=b2-b2grad;
+%W1=W1-W1grad;
+%b1=b1-b1grad;
 
 
 
