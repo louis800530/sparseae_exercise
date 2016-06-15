@@ -42,28 +42,21 @@ b2grad = zeros(size(b2));
 % the gradient descent update to W1 would be W1 := W1 - alpha * W1grad, and similarly for W2, b1, b2. 
 % 
 
-for i=1:10000
-    A = sigmoid(W1*data(:,i)+b1);
-    output = sigmoid(W2*A+b2);
+
+    A = sigmoid(W1*data+repmat(b1,1,size(data,2)));
+    output = sigmoid(W2*A+repmat(b2,1,size(data,2)));
     
-    err=(output-data(:,i)).*output.*(1-output);   
-    W2grad=W2grad+err*A';
-    b2grad=b2grad+err;
+    err=(output-data).*output.*(1-output);   
+    W2grad=err*A'/size(data,2)+lambda*W2;
+    b2grad=sum(err,2)/size(data,2);
     
     a2err=(W2'*err).*A.*(1-A);
-    W1grad=W1grad+a2err*data(:,i)';
-    b1grad=b1grad+a2err;
-    cost=cost+sum((output-data(:,i)).^2);
-end
-cost=cost/(2*10000);
-W2grad=W2grad/10000;
-b2grad=b2grad/10000;
-W1grad=W1grad/10000;
-b1grad=b1grad/10000;
-%W2=W2-W2grad;
-%b2=b2-b2grad;
-%W1=W1-W1grad;
-%b1=b1-b1grad;
+    W1grad=a2err*data'/size(data,2)+lambda*W1;
+    b1grad=sum(a2err,2)/size(data,2);
+    
+    weight_de=0.5*lambda*(sum(sum(W1.^2))+sum(sum(W2.^2)));
+    cost=sum(sum((output-data).^2))/(2*size(data,2))+weight_de;
+
 
 
 
@@ -72,7 +65,7 @@ b1grad=b1grad/10000;
 % to a vector format (suitable for minFunc).  Specifically, we will unroll
 % your gradient matrices into a vector.
 
-grad = [W1grad(:) ; W2grad(:) ; b2grad(:) ; b2grad(:)];
+grad = [W1grad(:) ; W2grad(:) ; b1grad(:) ; b2grad(:)];
 
 end
 
