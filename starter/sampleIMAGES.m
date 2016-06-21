@@ -2,9 +2,9 @@ function patches = sampleIMAGES()
 % sampleIMAGES
 % Returns 10000 patches for training
 
-load IMAGES;    % load images from disk 
-
-patchsize = 8;  % we'll use 8x8 patches 
+% load IMAGES;    % load images from disk 
+IMAGES  = loadMNISTImages('train-images.idx3-ubyte');
+patchsize = 28;  % we'll use 8x8 patches 
 numpatches = 10000;
 
 % Initialize patches with zeros.  Your code will fill in this matrix--one
@@ -24,21 +24,21 @@ patches = zeros(patchsize*patchsize, numpatches);
 %  patch corresponding to the pixels in the block (21,21) to (30,30) of
 %  Image 1
 
-for i=1:numpatches
-    ind(i,1)=ceil(rand()*505);
-    ind(i,2)=ceil(rand()*505);
-    ind(i,3)=ceil(rand()*10);
-end
+% for i=1:numpatches
+%     ind(i,1)=ceil(rand()*505);
+%     ind(i,2)=ceil(rand()*505);
+%     ind(i,3)=ceil(rand()*10);
+% end
+% 
+% mask = ones(8,8);
+% temp2=zeros(1,64);
+% for i=1:numpatches
+%     temp=IMAGES(ind(i,1):ind(i,1)+7,ind(i,2):ind(i,2)+7,ind(i,3)).*mask;
+%     temp2(:)=temp(:,:)' ;
+%     patches(:,i)=temp2(:)';
+% end
 
-mask = ones(8,8);
-temp2=zeros(1,64);
-for i=1:numpatches
-    temp=IMAGES(ind(i,1):ind(i,1)+7,ind(i,2):ind(i,2)+7,ind(i,3)).*mask;
-    temp2(:)=temp(:,:)' ;
-    patches(:,i)=temp2(:)';
-end
-
-
+patches=IMAGES(:,1:numpatches);
 
 
 
@@ -50,7 +50,7 @@ end
 % Specifically, since the output of the network is bounded between [0,1]
 % (due to the sigmoid activation function), we have to make sure 
 % the range of pixel values is also bounded between [0,1]
-patches = normalizeData(patches);
+% patches = normalizeData(patches);
 
 end
 

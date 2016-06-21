@@ -13,14 +13,17 @@
 %% STEP 0: Here we provide the relevant parameters values that will
 %  allow your sparse autoencoder to get good filters; you do not need to 
 %  change the parameters below.
+clc
+clear all
 
-visibleSize = 8*8;   % number of input units 
-hiddenSize = 25;     % number of hidden units 
-sparsityParam = 0.01;   % desired average activation of the hidden units.
+tic
+visibleSize = 28*28;   % number of input units (8*8)
+hiddenSize = 196;     % number of hidden units (25)
+sparsityParam = 0.1;   % desired average activation of the hidden units.(0.01)
                      % (This was denoted by the Greek alphabet rho, which looks like a lower-case "p",
 		     %  in the lecture notes). 
-lambda = 0.0001;     % weight decay parameter       
-beta = 3;            % weight of sparsity penalty term       
+lambda = 3e-3;     % weight decay parameter (0.0001)      
+beta = 3;            % weight of sparsity penalty term  (3)     
 
 %%======================================================================
 %% STEP 1: Implement sampleIMAGES
@@ -33,7 +36,7 @@ display_network(patches(:,randi(size(patches,2),200,1)),8);
 
 
 %  Obtain random parameters theta
-%theta = initializeParameters(hiddenSize, visibleSize);
+% theta = initializeParameters(hiddenSize, visibleSize);
 
 %%======================================================================
 %% STEP 2: Implement sparseAutoencoderCost
@@ -62,7 +65,7 @@ display_network(patches(:,randi(size(patches,2),200,1)),8);
 %  final submission of the visualized weights, please use parameters we 
 %  gave in Step 0 above.
 
-%[cost, grad] = sparseAutoencoderCost(theta, visibleSize, hiddenSize, lambda, ...
+% [cost, grad] = sparseAutoencoderCost(theta, visibleSize, hiddenSize, lambda, ...
 %                                     sparsityParam, beta, patches);
 
 %%======================================================================
@@ -79,17 +82,17 @@ display_network(patches(:,randi(size(patches,2),200,1)),8);
 
 % Now we can use it to check your cost function and derivative calculations
 % for the sparse autoencoder.  
-%numgrad = computeNumericalGradient( @(x) sparseAutoencoderCost(x, visibleSize, ...
+% numgrad = computeNumericalGradient( @(x) sparseAutoencoderCost(x, visibleSize, ...
 %                                                  hiddenSize, lambda, ...
 %                                                  sparsityParam, beta, ...
 %                                                  patches), theta);
 
 % Use this to visually compare the gradients side by side
-%disp([numgrad grad]); 
+% disp([numgrad grad]); 
 
 % Compare numerically computed gradients with the ones obtained from backpropagation
-%diff = norm(numgrad-grad)/norm(numgrad+grad);
-%disp(diff); % Should be small. In our implementation, these values are
+% diff = norm(numgrad-grad)/norm(numgrad+grad);
+% disp(diff); % Should be small. In our implementation, these values are
             % usually less than 1e-9.
 
             % When you got this working, Congratulations!!! 
@@ -127,4 +130,5 @@ display_network(W1', 12);
 
 print -djpeg weights.jpg   % save the visualization to a file 
 
+toc
 
