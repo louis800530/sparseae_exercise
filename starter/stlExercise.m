@@ -117,7 +117,7 @@ softmaxModel = struct;
 
 % You need to compute softmaxModel using softmaxTrain on trainFeatures and
 % trainLabels
-
+lambda=1e-4;
 softmaxModel = softmaxTrain(hiddenSize, numLabels, lambda, ...
                             trainFeatures, trainLabels, options);
 
