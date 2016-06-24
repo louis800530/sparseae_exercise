@@ -19,20 +19,15 @@ softmaxTheta = reshape(theta(1:hiddenSize*numClasses), numClasses, hiddenSize);
 
 % Extract out the "stack"
 stack = params2stack(theta(hiddenSize*numClasses+1:end), netconfig);
-
+M = size(data, 2);
 %% ---------- YOUR CODE HERE --------------------------------------
 %  Instructions: Compute pred using theta assuming that the labels start 
 %                from 1.
 
-
-
-
-
-
-
-
-
-
+A2 = sigmoid(stack{1}.w*data+repmat(stack{1}.b,1,M));
+A3 = sigmoid(stack{2}.w*A2+repmat(stack{2}.b,1,M));
+output=softmaxTheta*A3;
+[value,pred]=max(output);
 
 % -----------------------------------------------------------
 
